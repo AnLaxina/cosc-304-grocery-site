@@ -4,7 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>A&P Grocery</title>
+	<title>A&P Grocery</title>
+	<style>
+		th:first-child{
+			text-align: left;
+		}
+		body{
+			background-color: coral;
+		}
+	</style>
 </head>
 <body>
 
@@ -14,6 +22,12 @@
 <input type="text" name="productName" size="50">
 <input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
 </form>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Price</th>
+	</tr>
 
 <% // Get product name to search for
 String name = request.getParameter("productName");
@@ -46,17 +60,25 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	pstmt.setString(1, "%" + name + "%");  // Use '%' for wildcard search
 	ResultSet rs = pstmt.executeQuery();
 
+
 	while (rs.next()) {
     	String productName = rs.getString("productName");
     	String productPrice = rs.getString("productPrice");
     	String productId = rs.getString("productId");
 
-    	out.println("<a href=\"addcart.jsp?id=" + URLEncoder.encode(productId, "UTF-8") 
+		// For each product create a link of the form
+		// addcart.jsp?id=productId&name=productName&price=productPrice
+		out.println("<tr>");
+    	out.println("<td>" + productName + "</td>");
+    	out.println("<td>" + "$" + productPrice + "</td>");
+    	out.println("<td><a href=\"addcart.jsp?id=" + URLEncoder.encode(productId, "UTF-8") 
         	+ "&name=" + URLEncoder.encode(productName, "UTF-8") 
         	+ "&price=" + URLEncoder.encode(productPrice, "UTF-8") 
-        	+ "\">" + productName + "</a><br>");
+        	+ "\">Add to Cart</a></td>");
+    	out.println("</tr>");
 	}
-	
+	// Close connection
+	con.close();
 	
 	
 }
@@ -67,14 +89,14 @@ catch (SQLException ex)
 
 // Print out the ResultSet
 
-// For each product create a link of the form
-// addcart.jsp?id=productId&name=productName&price=productPrice
-// Close connection
+
+
 
 // Useful code for formatting currency values:
 // NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 // out.println(currFormat.format(5.0);	// Prints $5.00
 %>
+</table>
 
 </body>
 </html>
