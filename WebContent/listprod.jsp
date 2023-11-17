@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>YOUR NAME Grocery</title>
+<title>A&P Grocery</title>
 </head>
 <body>
 
@@ -32,6 +32,38 @@ catch (java.lang.ClassNotFoundException e)
 // Use it to build a query and print out the resultset.  Make sure to use PreparedStatement!
 
 // Make the connection
+String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
+String uid = "sa";
+String pw = "304#sa#pw";
+
+NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+			
+try ( Connection con = DriverManager.getConnection(url, uid, pw);
+	    Statement stmt = con.createStatement();) 
+{			
+	String query = "SELECT * FROM product WHERE productName LIKE ?";
+	PreparedStatement pstmt = con.prepareStatement(query);
+	pstmt.setString(1, "%" + name + "%");  // Use '%' for wildcard search
+	ResultSet rs = pstmt.executeQuery();
+
+	while (rs.next()) {
+    	String productName = rs.getString("productName");
+    	String productPrice = rs.getString("productPrice");
+    	String productId = rs.getString("productId");
+
+    	out.println("<a href=\"addcart.jsp?id=" + URLEncoder.encode(productId, "UTF-8") 
+        	+ "&name=" + URLEncoder.encode(productName, "UTF-8") 
+        	+ "&price=" + URLEncoder.encode(productPrice, "UTF-8") 
+        	+ "\">" + productName + "</a><br>");
+	}
+	
+	
+	
+}
+catch (SQLException ex)
+{
+	out.println("SQLException: " + ex);
+}		
 
 // Print out the ResultSet
 
