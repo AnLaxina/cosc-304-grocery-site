@@ -55,9 +55,16 @@ NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	    Statement stmt = con.createStatement();) 
 {			
-	String query = "SELECT * FROM product WHERE productName LIKE ?";
+	String query;
+    if (name != null && !name.isEmpty()) {
+        query = "SELECT * FROM product WHERE productName LIKE ?";
+    } else {
+        query = "SELECT * FROM product";
+    }
 	PreparedStatement pstmt = con.prepareStatement(query);
-	pstmt.setString(1, "%" + name + "%");  // Use '%' for wildcard search
+	if (name != null && !name.isEmpty()) {
+        pstmt.setString(1, "%" + name + "%");  // Use '%' for wildcard search
+    }
 	ResultSet rs = pstmt.executeQuery();
 
 
