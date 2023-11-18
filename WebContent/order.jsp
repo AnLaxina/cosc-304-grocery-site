@@ -22,68 +22,85 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
 // Determine if there are products in the shopping cart
 // If either are not true, display an error message
 
-if(custId != null || productList != null){
-	out.println("You're good brother!");
-}
-
-
 // Make connection
 String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
-		String uid = "sa";
-		String pw = "todo";
-			
-		try ( Connection con = DriverManager.getConnection(url, uid, pw);
-	          Statement stmt = con.createStatement();) 
-	    {			
-			ResultSet rst = stmt.executeQuery("SELECT ename,salary FROM emp");
-			out.println("Employee Name,Salary");
-			while (rst.next())
-			{	out.println(rst.getString("ename")+","+rst.getDouble("salary"));
+String uid = "sa";
+String pw = "304#sa#pw";
 
-			}
-		}
-		catch (SQLException ex)
-		{
-			System.err.println("SQLException: " + ex);
-		}		
+try {
+    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    Connection con = DriverManager.getConnection(url, uid, pw);
 
-// Save order information to database
+    // Validate customer id
+    PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM customer WHERE customerId = ?");
+    ps.setString(1, custId);
+    ResultSet rs = ps.executeQuery();
+    rs.next();
+    if (rs.getInt(1) == 0) {
+        out.println("Invalid customer id.");
+        return;
+    }
 
+    // Check if shopping cart is empty
+    if (productList == null || productList.isEmpty()) {
+        out.println("Shopping cart is empty.");
+        return;
+    }
 
-	/*
-	// Use retrieval of auto-generated keys.
-	PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);			
-	ResultSet keys = pstmt.getGeneratedKeys();
-	keys.next();
-	int orderId = keys.getInt(1);
-	*/
+    // Insert into OrderSummary table
+    String sql = "INSERT INTO ordersummary (customerId, orderDate) VALUES (?, GETDATE())";
+    PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+    pstmt.setString(1, custId);
+    pstmt.executeUpdate();
+    ResultSet keys = pstmt.getGeneratedKeys();
+    keys.next();
+    int orderId = keys.getInt(1);
 
-// Insert each item into OrderProduct table using OrderId from previous INSERT
+    // Traverse through productList and insert into OrderProduct table
+    double totalAmount = 0;
+    Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
+    while (iterator.hasNext()) { 
+        Map.Entry<String, ArrayList<Object>> entry = iterator.next();
+        ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
+        String productId = (String) product.get(0);
+        double price = Double.parseDouble((String) product.get(2));
+        int qty = (Integer) product.get(3);
 
-// Update total amount for order record
+        sql = "INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (?, ?, ?, ?)";
+        pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, orderId);
+        pstmt.setString(2, productId);
+        pstmt.setInt(3, qty);
+        pstmt.setDouble(4, price);
+        pstmt.executeUpdate();
 
-// Here is the code to traverse through a HashMap
-// Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
+        totalAmount += price * qty;
+    }
 
-/*
-	Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
-	while (iterator.hasNext())
-	{ 
-		Map.Entry<String, ArrayList<Object>> entry = iterator.next();
-		ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
-		String productId = (String) product.get(0);
-        String price = (String) product.get(2);
-		double pr = Double.parseDouble(price);
-		int qty = ( (Integer)product.get(3)).intValue();
-            ...
-	}
-*/
+    // Update total amount for order record
+    sql = "UPDATE ordersummary SET totalAmount = ? WHERE orderId = ?";
+    pstmt = con.prepareStatement(sql);
+    pstmt.setDouble(1, totalAmount);
+    pstmt.setInt(2, orderId);
+    pstmt.executeUpdate();
 
-// Print out order summary
+    // Display order information
+    out.println("Order placed successfully. Order ID: " + orderId + ", Total Amount: " + totalAmount);
 
-// Clear cart if order placed successfully
+    // Clear shopping cart
+    session.removeAttribute("productList");
+
+    // Close connection
+    if (con != null) {
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+} catch (Exception e) {
+    e.printStackTrace();
+} 
 %>
-<p> hi this is HTML code that comes after everything except the body</p>
-</body>
-</html>
-
+</BODY>
+</HTML>

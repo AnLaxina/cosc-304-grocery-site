@@ -67,7 +67,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
     }
 	ResultSet rs = pstmt.executeQuery();
 
-
+	// Print out the ResultSet
 	while (rs.next()) {
     	String productName = rs.getString("productName");
     	String productPrice = rs.getString("productPrice");
@@ -94,7 +94,7 @@ catch (SQLException ex)
 	out.println("SQLException: " + ex);
 }		
 
-// Print out the ResultSet
+
 
 
 
