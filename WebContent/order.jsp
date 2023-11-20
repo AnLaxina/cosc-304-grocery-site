@@ -46,6 +46,9 @@ try {
         return;
     }
 
+    // Number format
+    NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+
     // Check if shopping cart is empty
     if (productList == null || productList.isEmpty()) {
         out.println("<h2>Shopping cart is empty!</h2>");
@@ -78,7 +81,7 @@ try {
         int qty = (Integer) product.get(3);
 
         // Insert row into Order Summary Table
-        out.println("<tr><td>" + productId + "</td><td>" + productName + "</td><td>" + qty + "</td><td>" + "$" + price + "</td><td>" + "$" + price + "</td></tr>");
+        out.println("<tr><td>" + productId + "</td><td>" + productName + "</td><td>" + qty + "</td><td>" + currFormat.format(price) + "</td><td>" + currFormat.format(price * qty) + "</td></tr>");
 
         sql = "INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (?, ?, ?, ?)";
         pstmt = con.prepareStatement(sql);
@@ -103,7 +106,7 @@ try {
 
     // Display order information
     out.println("<br>");
-    out.println("<h3>Order placed successfully! Reference Number: " + orderId + "<br> Total Amount: " + "$" + totalAmount + "</h3>");
+    out.println("<h3>Order placed successfully! Reference Number: " + orderId + "<br> Total Amount: " + currFormat.format(totalAmount) + "</h3>");
 
     // Clear shopping cart
     session.removeAttribute("productList");
