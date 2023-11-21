@@ -5,6 +5,25 @@
 <html>
 <head>
 <title>A&Q Grocery Order List</title>
+<style>
+    body{
+        background-color: #2a9d8f;
+    }
+
+    .button{
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: black;
+        background-color: #e9c46a;
+        border: none;
+        border-radius: 15px;
+    }
+</style>
 </head>
 <body>
 
@@ -74,6 +93,8 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		rst2.close();
 	}
 	out.println("</table>");
+	// Close connection
+	con.close();
 }
 catch (SQLException ex)
 {
@@ -89,9 +110,9 @@ catch (SQLException ex)
 	// For each product in the order
 		// Write out product information 
 
-// Close connection
-%>
 
+%>
+<a href="shop.html" class="button">Return to main page</a>
 </body>
 </html>
 
