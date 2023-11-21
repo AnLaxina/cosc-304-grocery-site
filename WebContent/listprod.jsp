@@ -10,7 +10,7 @@
 			text-align: left;
 		}
 		body{
-			background-color: coral;
+			background-color: #00B4D8;
 		}
 	</style>
 </head>

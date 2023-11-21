@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Ray's Grocery CheckOut Line</title>
+<title>A&P's Grocery Checkout Line</title>
+<style>
+	body{
+		background-color: #90E0EF;
+	}
+</style>
 </head>
 <body>
 

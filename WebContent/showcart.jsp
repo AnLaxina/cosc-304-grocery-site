@@ -8,6 +8,11 @@
 <html>
 <head>
 <title>Your Shopping Cart</title>
+<style>
+	body{
+		background-color: #90E0EF;
+	}
+</style>
 </head>
 <body>
 

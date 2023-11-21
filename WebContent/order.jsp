@@ -11,7 +11,7 @@
 <title>A&P Grocery Order Processing</title>
 <style>
     body{
-        background-color: lightblue;
+        background-color: #90E0EF;
     }
 
     .button{
@@ -22,8 +22,8 @@
         text-align: center;
         text-decoration: none;
         outline: none;
-        color: white;
-        background-color: orange;
+        color: black;
+        background-color: #00B4D8;
         border: none;
         border-radius: 15px;
     }

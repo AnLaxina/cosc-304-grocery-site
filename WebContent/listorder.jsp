@@ -7,7 +7,7 @@
 <title>A&Q Grocery Order List</title>
 <style>
     body{
-        background-color: #2a9d8f;
+        background-color: #00B4D8;
     }
 
     .button{
@@ -18,8 +18,8 @@
         text-align: center;
         text-decoration: none;
         outline: none;
-        color: black;
-        background-color: #e9c46a;
+        color: whitesmoke;
+        background-color: #0077B6;
         border: none;
         border-radius: 15px;
     }
