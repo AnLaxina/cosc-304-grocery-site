@@ -2,19 +2,47 @@
 <html>
 
 <head>
-        <title>YOUR NAME Grocery Main Page</title>
+        <title>A&P Grocery Main Page</title>
+        <style>
+                body {
+                        background-color: #264653;
+                }
+                .container {
+                    
+                    
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    height: 75vh;
+                    margin: 0;
+                }
+            
+                h2{
+                    display: block;
+                    margin: 50px;
+                    padding: 10px 20px;
+                    font-size: 20px;
+                    cursor: pointer;
+                    text-decoration: none;
+                    color: black;
+                    background-color: #e9c46a;
+                    border: none;
+                    border-radius: 15px;
+                }
+            </style>
 </head>
 
 <body>
-        <h1 align="center">Welcome to YOUR NAME Grocery</h1>
+        <h1 align="center" style="color:whitesmoke;">Welcome to A&P Grocery</h1>
 
-        <h2 align="center"><a href="listprod.jsp">Begin Shopping</a></h2>
+        <div class="container">
+                <h2 align="center"><a href="listprod.jsp">Begin Shopping</a></h2>
 
-        <h2 align="center"><a href="listorder.jsp">List All Orders</a></h2>
+                <h2 align="center"><a href="listorder.jsp">List All Orders</a></h2>
+        </div>
+        
 
-        <h2 align="center"><a href="HelloWorld.jsp">Click here to say "Hello World"!</a></h2>
-
-        <h2 align="center"><a href="order.jsp">Click here to test order.jsp</a></h2>
 
 </body>
 </html>
