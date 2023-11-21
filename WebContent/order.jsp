@@ -13,6 +13,20 @@
     body{
         background-color: lightblue;
     }
+
+    .button{
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: white;
+        background-color: orange;
+        border: none;
+        border-radius: 15px;
+    }
 </style>
 </head>
 <body>
@@ -41,8 +55,10 @@ try {
     ps.setString(1, custId);
     ResultSet rs = ps.executeQuery();
     rs.next();
+    //int customId = rs.getInt("customerId");
     if (rs.getInt(1) == 0) {
-        out.println("<h2>Invalid customer id.</h2>");
+        out.println("<h2>Invalid customer id!</h2>");
+        out.println("<a href=\"shop.html\" class=\"button\">Return to main page</a>");
         return;
     }
 
@@ -52,6 +68,7 @@ try {
     // Check if shopping cart is empty
     if (productList == null || productList.isEmpty()) {
         out.println("<h2>Shopping cart is empty!</h2>");
+        out.println("<a href=\"shop.html\" class=\"button\">Return to main page</a>");
         return;
     }
 
@@ -119,9 +136,13 @@ try {
             e.printStackTrace();
         }
     }
-} catch (Exception e) {
-    e.printStackTrace();
 } 
+catch (Exception e) {
+    e.printStackTrace();
+    out.println("<h2>Invalid customer id!</h2>");
+} 
+
 %>
+<a href="shop.html" class="button">Return to main page</a>
 </BODY>
 </HTML>
