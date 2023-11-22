@@ -23,9 +23,11 @@
 <input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
 </form>
 
-<table>
+<table border='1'>
 	<tr>
 		<th>Name</th>
+		<th>Product</th>
+		<th>Category</th>
 		<th>Price</th>
 	</tr>
 
@@ -57,9 +59,11 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 {			
 	String query;
     if (name != null && !name.isEmpty()) {
-        query = "SELECT * FROM product WHERE productName LIKE ?";
+        query = "SELECT * FROM product p " +
+		"JOIN category c ON p.categoryId = c.categoryId WHERE productName LIKE ?";
     } else {
-        query = "SELECT * FROM product";
+        query = "SELECT * FROM product p " +
+		"JOIN category c ON p.categoryId = c.categoryId";
     }
 	PreparedStatement pstmt = con.prepareStatement(query);
 	if (name != null && !name.isEmpty()) {
@@ -72,16 +76,20 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
     	String productName = rs.getString("productName");
     	String productPrice = rs.getString("productPrice");
     	String productId = rs.getString("productId");
+		String category = rs.getString("categoryName");
 
 		// For each product create a link of the form
 		// addcart.jsp?id=productId&name=productName&price=productPrice
 		out.println("<tr>");
-    	out.println("<td>" + productName + "</td>");
+		out.println("<td><a href=\"addcart.jsp?id=" + URLEncoder.encode(productId, "UTF-8") 
+			+ "&name=" + URLEncoder.encode(productName, "UTF-8") 
+			+ "&price=" + URLEncoder.encode(productPrice, "UTF-8") 
+			+ "\">Add to Cart</a></td>");
+		out.println("<td><a href=\"product.jsp?id=" + URLEncoder.encode(productId, "UTF-8") 
+			+ "\">" + productName + "</a></td>");
+    	out.println("<td>" + category + "</td>");
     	out.println("<td>" + "$" + productPrice + "</td>");
-    	out.println("<td><a href=\"addcart.jsp?id=" + URLEncoder.encode(productId, "UTF-8") 
-        	+ "&name=" + URLEncoder.encode(productName, "UTF-8") 
-        	+ "&price=" + URLEncoder.encode(productPrice, "UTF-8") 
-        	+ "\">Add to Cart</a></td>");
+    	
     	out.println("</tr>");
 	}
 	// Close connection
