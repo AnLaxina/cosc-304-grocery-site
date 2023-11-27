@@ -2,6 +2,17 @@
 <html>
 <head>
 <title>Customer Page</title>
+<style>
+	.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+}
+</style>
 </head>
 <body>
 
@@ -87,9 +98,10 @@ catch (SQLException ex)
 	out.println("SQLException: " + ex);
 }		
 
-
 %>
 
+<br>
+<a href="index.jsp" class="button">Return to Main Page</a>
 </body>
 </html>
 
