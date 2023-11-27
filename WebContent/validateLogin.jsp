@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.io.*,java.sql.*"%>
+<%@ page language="java" import="java.io.*,java.sql.*, java.util.HashMap"%>
 <%@ include file="jdbc.jsp" %>
 <%
 	String authenticatedUser = null;
@@ -35,11 +35,21 @@
 			getConnection();
 			
 			// Checks if userId and password match some customer account. If so, set retStr to be the username.
-			// These two String variables can be changed if you'd like
-			String validUser = "ValidUser";
-			String validPass = "Groceries";
-			if(username.equals(validUser) && password.equals(validPass)){
-				retStr = validUser;
+			// Uses a HashMap to get a list of valid users
+			HashMap<String,String> validUsers = new HashMap<String, String>();
+			validUsers.put("arnold", "304Arnold!");
+			validUsers.put("bobby","304Bobby!");
+			validUsers.put("candace", "304Candace!");
+			validUsers.put("darren","304Darren!");
+			validUsers.put("beth", "304Beth!");
+
+			// Checks if the user inputted a valid username
+			if(validUsers.containsKey(username)){
+				String validPassword = validUsers.get(username);
+				if(validPassword.equals(password)){
+					retStr = username;
+				}
+				
 			}
 						
 		} 
