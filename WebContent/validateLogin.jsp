@@ -36,8 +36,8 @@
 			
 			// Checks if userId and password match some customer account. If so, set retStr to be the username.
 			// These two String variables can be changed if you'd like
-			String validUser = "GroceryUser";
-			String validPass = "password";
+			String validUser = "ValidUser";
+			String validPass = "Groceries";
 			if(username.equals(validUser) && password.equals(validPass)){
 				retStr = validUser;
 			}
