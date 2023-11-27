@@ -54,10 +54,9 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		out.println("<h2>"+ productName + "</h2><br>");
 
 		// You need to put image here
-
-		out.println("<img <a href=\"displayImage.jsp?id=" + URLEncoder.encode(productId, "UTF-8") 
-		+ "\"><h2></h2></a>>");
-
+		out.println("<img src=\"displayImage.jsp?id=" + URLEncoder.encode(productId, "UTF-8") + "\">");
+		out.println("<br>");
+		
 		out.println("<b>Product Id: </b>");
 		out.println(productId+ "<br>");
 		out.println("<b>Price: </b>");
