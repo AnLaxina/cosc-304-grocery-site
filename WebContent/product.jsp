@@ -53,10 +53,11 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		// addcart.jsp?id=productId&name=productName&price=productPrice
 		out.println("<h2>"+ productName + "</h2><br>");
 
-		// You need to put image here
-		out.println("<img src=\"displayImage.jsp?id=" + URLEncoder.encode(productId, "UTF-8") + "\">");
+		// Instead of retrieving it from the database, we will get it locally instead
+		// out.println("<img src=\"displayImage.jsp?id=" + URLEncoder.encode(productId, "UTF-8") + "\">");
+		out.println("<img src=img/" + productId + ".jpg>");
+
 		out.println("<br>");
-		
 		out.println("<b>Product Id: </b>");
 		out.println(productId+ "<br>");
 		out.println("<b>Price: </b>");
