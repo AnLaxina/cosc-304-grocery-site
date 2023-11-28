@@ -16,23 +16,11 @@
 <%@ include file="header.jsp" %>
 
 <%
-	// TODO: Get order id
+	// Get order id
 	String orderId = request.getParameter("orderId");
           
-	// TODO: Check if valid order id in database
-	//if(orderId )
-	
-	// TODO: Start a transaction (turn-off auto-commit)
-	
-	// TODO: Retrieve all items in order with given id
-	try
-	{	// Load driver class
-		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-	}
-		catch (java.lang.ClassNotFoundException e)
-	{
-		out.println("ClassNotFoundException: " +e);
-	}
+	// Load driver class
+	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
 	// Make the connection
 	String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
@@ -42,15 +30,27 @@
 	NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 				
 	try ( Connection con = DriverManager.getConnection(url, uid, pw); ) 
-	{			
-		String sql = "SELECT *, pi.quantity AS prevQuantity FROM orderproduct op "
-					+"JOIN productinventory pi ON op.productId = pi.productId "
-					+"WHERE orderId = ?";
+	{	
+		// Start a transaction (turn-off auto-commit)
+		con.setAutoCommit(false);
+		
+		// Check if valid order id in database
+		String sql = "SELECT COUNT(*) FROM orderProduct WHERE orderId = ?";
 		PreparedStatement pstmt = con.prepareStatement(sql);
-		if (orderId != null && !orderId.isEmpty()) {
-			pstmt.setString(1, orderId);
-		}
+		pstmt.setString(1, orderId);
 		ResultSet rs = pstmt.executeQuery();
+		if (!rs.next() || rs.getInt(1) == 0) {
+			out.println("Invalid order id: " + orderId);
+			return;
+		}
+		
+		// Retrieve all items in order with given id
+		sql = "SELECT *, pi.quantity AS prevQuantity FROM orderproduct op "
+			+"JOIN productinventory pi ON op.productId = pi.productId "
+			+"WHERE orderId = ?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, orderId);
+		rs = pstmt.executeQuery();
 		int count=0;
 
 		// Print out the ResultSet
@@ -60,11 +60,10 @@
 			int prevInventory = rs.getInt("prevQuantity");
 			int newInventory = prevInventory - quantity;
 			
-
 			// For each product create a link of the form
 			// addcart.jsp?id=productId&name=productName&price=productPrice
 			if(quantity > prevInventory){
-				out.println("<b>Shipment not done. Insufficient inventory for product id: "+ productId +"</b>");
+				out.println("<h2>Shipment not done. Insufficient inventory for product id: "+ productId +"</h2>");
 				count++;
 			} else {
 				out.println("<h2>Ordered Product: "+productId
@@ -72,13 +71,39 @@
 					+" Previous Inventory: "+prevInventory
 					+" New Inventory: "+newInventory+"</h2>");
 				out.println("<br>");
+
+				// Update inventory for each item
+				sql = "UPDATE productinventory SET quantity = ? WHERE productId = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, newInventory);
+				pstmt.setString(2, productId);
+				pstmt.executeUpdate();
 			}
-			
 		}
-		if(count==0){
-			out.println("<h2>Shipment Succesfuly Processed</h2>");
+		
+        if(count==0){
+			out.println("<h2>Shipment successfully processed.</h2>");
 			out.println("<br>");
 		}
+
+		// If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, commit transaction
+		if (count > 0) {
+			con.rollback();
+		} else {
+			con.commit();
+		}
+		
+		// Auto-commit should be turned back on
+		con.setAutoCommit(true);
+		
+		// Create a new shipment record
+        int warehouseId = 1;
+		sql = "INSERT INTO shipment (shipmentDate, warehouseId) VALUES (?, ?)";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setDate(1, java.sql.Date.valueOf(java.time.LocalDate.now()));
+		pstmt.setInt(2, warehouseId);
+		pstmt.executeUpdate();
+		
 		// Close connection
 		con.close();
 	}
@@ -86,15 +111,6 @@
 	{
 		out.println("SQLException: " + ex);
 	}		
-
-	// TODO: Create a new shipment record.
-
-
-	// TODO: For each item verify sufficient quantity available in warehouse 1.
-
-	// TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
-	
-	// TODO: Auto-commit should be turned back on
 
 %>                       				
 
