@@ -5,14 +5,7 @@
 <html>
 <head>
 	<title>A&P Grocery</title>
-	<style>
-		th:first-child{
-			text-align: left;
-		}
-		body{
-			background-color: #00B4D8;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 

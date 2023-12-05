@@ -5,25 +5,7 @@
 <html>
 <head>
 <title>A&Q Grocery Order List</title>
-<style>
-    body{
-        background-color: #00B4D8;
-    }
-
-    .button{
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 20px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        outline: none;
-        color: whitesmoke;
-        background-color: #0077B6;
-        border: none;
-        border-radius: 15px;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
@@ -112,7 +94,7 @@ catch (SQLException ex)
 
 
 %>
-<a href="shop.html" class="button">Return to main page</a>
+<button onclick="window.location.href='shop.html'" class="main">Return to Main Page</button>
 </body>
 </html>
 
