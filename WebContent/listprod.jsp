@@ -5,16 +5,94 @@
 <html>
 <head>
 	<title>A&P Grocery</title>
+	<!-- Add the same style section as in the shop.html page -->
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- Add some additional style rules for the search form and the table -->
+	<style>
+		/* Style the search form */
+		.search-form {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 20px;
+			padding: 20px;
+			font-size: 18px;
+			color: #03045E;
+			border: 2px solid #0077B6;
+			border-radius: 15px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.1);
+		}
+
+		/* Style the input field in the search form */
+		.search-form input[type="text"] {
+			width: 300px;
+			margin: 10px;
+			padding: 10px;
+			border: 1px solid #0077B6;
+			border-radius: 10px;
+		}
+
+		/* Style the table */
+		table {
+			width: 80%;
+			margin: 0 auto;
+			border-collapse: collapse;
+		}
+
+		/* Style the table header */
+		th {
+			height: 50px;
+			background-color: #0077B6;
+			color: white;
+			text-align: center;
+			font-weight: bold;
+		}
+
+		/* Style the table cells */
+		td {
+			height: 100px;
+			padding: 10px;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		/* Alternate the background color of the table rows */
+		tr:nth-child(even) {
+			background-color: #F0F2F5;
+		}
+
+		tr:nth-child(odd) {
+			background-color: #E0E0E0;
+		}
+
+		/* Style the product image */
+		.product-image {
+			width: 80px;
+			height: 80px;
+			object-fit: cover;
+		}
+	</style>
 </head>
 <body>
 
-<h1>Search for the products you want to buy:</h1>
+<!-- Add the same logo and navbar as in the shop.html page -->
+<img src="logo.png" alt="A&P Grocery Logo" class="logo">
 
-<form method="get" action="listprod.jsp">
-<input type="text" name="productName" size="50">
-<input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
-</form>
+<div class="navbar">
+        <a href="login.jsp">Login</a>
+        <a href="customer.jsp">Customer Info</a>
+        <a href="admin.jsp">Administrators</a>
+        <a href="logout.jsp">Log out</a>
+</div>
+
+<!-- Style the search form and the table -->
+<div class="search-form">
+	<form method="get" action="listprod.jsp">
+	<input type="text" name="productName" size="50" placeholder="Enter product name...">
+	<button type="submit">Submit</button>
+	<button type="reset">Reset</button>
+	</form>
+</div>
 
 <table border='1'>
 	<tr>
@@ -22,6 +100,7 @@
 		<th>Product</th>
 		<th>Category</th>
 		<th>Price</th>
+		<th>Image</th>
 	</tr>
 
 <% // Get product name to search for
@@ -82,6 +161,8 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 			+ "\">" + productName + "</a></td>");
     	out.println("<td>" + category + "</td>");
     	out.println("<td>" + "$" + productPrice + "</td>");
+    	// Add a column for the product image
+    	out.println("<td><img src=\"img/" + productId + ".jpg\" alt=\"" + productName + "\" class=\"product-image\"></td>");
     	
     	out.println("</tr>");
 	}
@@ -94,12 +175,6 @@ catch (SQLException ex)
 {
 	out.println("SQLException: " + ex);
 }		
-
-
-
-
-
-
 // Useful code for formatting currency values:
 // NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 // out.println(currFormat.format(5.0);	// Prints $5.00
