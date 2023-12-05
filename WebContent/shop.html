@@ -3,70 +3,32 @@
 
 <head>
         <title>A&P Grocery Main Page</title>
-        <style>
-                body {
-                        background-color: #03045E;
-                }
-                .container {
-                    
-                    
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    height: 80vh;
-                    margin: 0;
-                }
-
-                .mini-container{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: center;
-                    height: 20vh;
-                    padding: 10;
-                }
-            
-                h2, h4{
-                    display: block;
-                    margin: 50px;
-                    padding: 10px 20px;
-                    font-size: 20px;
-                    cursor: pointer;
-                    text-decoration: none;
-                    color: whitesmoke;
-                    background-color: #0077B6;
-                    border: none;
-                    border-radius: 15px;
-                }
-            </style>
+        <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-        <h1 align="center" style="color:whitesmoke;">Welcome to A&P Grocery</h1>
+        <!-- Add a logo for the website -->
+        <img src="logo.png" alt="A&P Grocery Logo" class="logo">
 
-        <div class="container">
-                <h2 align="center"><a href="login.jsp">Login</a></h2>
-
-                <h2 align="center"><a href="listprod.jsp">Begin Shopping</a></h2>
-
-                <h2 align="center"><a href="listorder.jsp">List All Orders</a></h2>
-
-                <h2 align="center"><a href="customer.jsp">Customer Info</a></h2>
-
-                <h2 align="center"><a href="admin.jsp">Administrators</a></h2>
-
-                <h2 align="center"><a href="logout.jsp">Log out</a></h2>
-
-                
+        <!-- Create a navigation bar with links -->
+        <div class="navbar">
+                <a href="login.jsp">Login</a>
+                <a href="customer.jsp">Customer Info</a>
+                <a href="admin.jsp">Administrators</a>
+                <a href="logout.jsp">Log out</a>
         </div>
-        <div class="mini-container">
-                <h4 align="center"><a href="ship.jsp?orderId=1">Test Ship orderId=1</a></h4>
 
-                <h4 align="center"><a href="ship.jsp?orderId=3">Test Ship orderId=3</a></h4>
+        <!-- Create a main content section with buttons -->
+        <div class="main">
+                <h1>Welcome to A&P Grocery</h1>
+                <button onclick="window.location.href='listprod.jsp'">Begin Shopping</button>
+                <button onclick="window.location.href='listorder.jsp'">List All Orders</button>
         </div>
-        
 
-
+        <!-- Create a footer section with links -->
+        <div class="footer">
+                <a href="ship.jsp?orderId=1">Test Ship orderId=1</a>
+                <a href="ship.jsp?orderId=3">Test Ship orderId=3</a>
+        </div>
 </body>
 </html>
