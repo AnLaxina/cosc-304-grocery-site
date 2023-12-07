@@ -42,6 +42,8 @@
 			validUsers.put("candace", "304Candace!");
 			validUsers.put("darren","304Darren!");
 			validUsers.put("beth", "304Beth!");
+			validUsers.put("putri", "304Putri!");
+			validUsers.put("anilov", "304Anilov!");
 
 			// Checks if the user inputted a valid username
 			if(validUsers.containsKey(username)){
