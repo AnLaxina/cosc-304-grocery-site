@@ -2,80 +2,54 @@
 <html>
 <head>
 <title>Administrator Page</title>
+<link rel="stylesheet" type="text/css" href="style.css">
 <style>
-    table, th, td{
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-
     .button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    text-decoration: none;
-    color: black;
-}
+            display: block;
+            width: 200px; 
+            margin: 10px auto; 
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: whitesmoke;
+            background-color: #0077B6;
+            border: none;
+            border-radius: 15px;
+            transition: 0.3s;
+    }
+    .container {
+            text-align: center; 
+    }
 </style>
 </head>
 <body>
 
-<h2>Adminstrator Sales Report by Day</h2>
-
-<%@
- include file = "auth.jsp"
-%>
-<%@
- include file = "jdbc.jsp"
-%>
-
 <%
-
-// Writes SQL query that prints out total order amount by day
-String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";	
-// String uid = "sa";
-// String pw = "304#sa#pw";
-
-			
-try ( Connection con = DriverManager.getConnection(url);
-	    Statement stmt = con.createStatement();) {
-    String sql = "SELECT FORMAT(orderDate, 'yyyy-MM-dd') as orderDate, SUM(totalAmount) as amountbyDay " +
-            "FROM ordersummary " +
-            "GROUP BY FORMAT(orderDate, 'yyyy-MM-dd')";
-
-    // Using PreparedStatement
-    PreparedStatement pstmt = con.prepareStatement(sql);
-
-    // Execute the query
-    ResultSet rs = pstmt.executeQuery();
-
-    // Start table
-    out.println("<table>");
-    out.println("<tr><th>Order Date</th><th>Total Order Amount</th></tr>");
-
-    // Loop through the result set
-    while(rs.next()) {
-        out.println("<tr><td>" + rs.getString("orderDate") + "</td><td>" + rs.getDouble("amountbyDay") + "</td></tr>");
-    }
-
-    // End table
-    out.println("</table>");
-
-    rs.close();
-    pstmt.close();
-  
-        } catch (SQLException ex){
-	out.println("SQLException: " + ex);
-}	
-
-
+// Check if a user is logged in
+if (session.getAttribute("authenticatedUser") == null) {
+    // If not, redirect to the login page
+    response.sendRedirect("login.jsp");
+} else {
+    // If so, display the admin page
 %>
+
+<div class="container">
+    <!-- Your admin page HTML code goes here -->
+    <h2>Welcome to the Administrator Page</h2>
+
+    <!-- Add a button to view total sales -->
+    <a href="salesReport.jsp" class="button">View Total Sales</a>
+
+    <!-- Add more buttons as needed for other admin functions -->
 
     <!--Returns the user to the main admin page-->
     <br>
     <a href="index.jsp" class="button">Return to Main Page</a>
+</div>
 
+<%
+}
+%>
 </body>
 </html>
-
