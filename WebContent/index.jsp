@@ -2,13 +2,15 @@
 <html>
 
 <head>
-        <title>A&P Grocery Main Page</title>
+        <title>A&P Pharmacy Main Page</title>
         <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
         <!-- Add a logo for the website -->
-        <img src="logo.png" alt="A&P Grocery Logo" class="logo">
+		<div style="text-align: center;">
+       		 <img src="logo.png" alt="A&P Pharmacy Logo" class="logo">
+		</div>
 
         <!-- Create a navigation bar with links -->
         <div class="navbar">
@@ -20,7 +22,7 @@
 
         <!-- Create a main content section with buttons -->
         <div class="main">
-                <h1>Welcome to A&P Grocery</h1>
+                <h1>Welcome to A&P Pharmacy</h1>
                 <button onclick="window.location.href='listprod.jsp'">Begin Shopping</button>
                 <button onclick="window.location.href='listorder.jsp'">List All Orders</button>
         </div>
