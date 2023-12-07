@@ -120,13 +120,14 @@ catch (java.lang.ClassNotFoundException e)
 // Use it to build a query and print out the resultset.  Make sure to use PreparedStatement!
 
 // Make the connection
-String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
-String uid = "sa";
-String pw = "304#sa#pw";
+// String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
+// String uid = "sa";
+// String pw = "304#sa#pw";
+String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 
 NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 			
-try ( Connection con = DriverManager.getConnection(url, uid, pw);
+try ( Connection con = DriverManager.getConnection(url);
 	    Statement stmt = con.createStatement();) 
 {			
 	String query;
