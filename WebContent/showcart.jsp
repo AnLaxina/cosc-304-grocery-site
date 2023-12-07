@@ -8,11 +8,7 @@
 <html>
 <head>
 <title>Your Shopping Cart</title>
-<style>
-	body{
-		background-color: #90E0EF;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 

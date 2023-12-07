@@ -9,25 +9,7 @@
 <html>
 <head>
 <title>A&P Grocery Order Processing</title>
-<style>
-    body{
-        background-color: #90E0EF;
-    }
-
-    .button{
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 20px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        outline: none;
-        color: black;
-        background-color: #00B4D8;
-        border: none;
-        border-radius: 15px;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
@@ -42,13 +24,13 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
 // If either are not true, display an error message
 
 // Make connection
-String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
-String uid = "sa";
-String pw = "304#sa#pw";
+String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";	
+// String uid = "sa";
+// String pw = "304#sa#pw";
 
 try {
     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    Connection con = DriverManager.getConnection(url, uid, pw);
+    Connection con = DriverManager.getConnection(url);
 
     // Validate customer id
     PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM customer WHERE customerId = ?");
@@ -143,6 +125,6 @@ catch (Exception e) {
 } 
 
 %>
-<a href="shop.html" class="button">Return to main page</a>
+<button class="main" onclick="window.location.href='shop.html'">Return to main page</button>
 </BODY>
 </HTML>
