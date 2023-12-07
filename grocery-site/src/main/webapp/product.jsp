@@ -28,9 +28,9 @@ catch (java.lang.ClassNotFoundException e)
 }
 
 // Make the connection
-String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
-String uid = "sa";
-String pw = "304#sa#pw";
+"jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";		
+// String uid = "sa";
+// String pw = "304#sa#pw";
 
 NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 			

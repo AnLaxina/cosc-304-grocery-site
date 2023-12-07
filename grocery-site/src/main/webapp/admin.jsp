@@ -33,12 +33,12 @@
 <%
 
 // Writes SQL query that prints out total order amount by day
-String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";		
-String uid = "sa";
-String pw = "304#sa#pw";
+String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";	
+// String uid = "sa";
+// String pw = "304#sa#pw";
 
 			
-try ( Connection con = DriverManager.getConnection(url, uid, pw);
+try ( Connection con = DriverManager.getConnection(url);
 	    Statement stmt = con.createStatement();) {
     String sql = "SELECT FORMAT(orderDate, 'yyyy-MM-dd') as orderDate, SUM(totalAmount) as amountbyDay " +
             "FROM ordersummary " +

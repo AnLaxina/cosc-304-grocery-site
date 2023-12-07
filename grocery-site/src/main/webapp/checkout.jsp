@@ -2,11 +2,7 @@
 <html>
 <head>
 <title>A&P's Grocery Checkout Line</title>
-<style>
-	body{
-		background-color: #90E0EF;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
