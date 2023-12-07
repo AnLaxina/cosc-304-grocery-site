@@ -35,24 +35,15 @@
 			getConnection();
 			
 			// Checks if userId and password match some customer account. If so, set retStr to be the username.
-			// Uses a HashMap to get a list of valid users
-			HashMap<String,String> validUsers = new HashMap<String, String>();
-			validUsers.put("arnold", "304Arnold!");
-			validUsers.put("bobby","304Bobby!");
-			validUsers.put("candace", "304Candace!");
-			validUsers.put("darren","304Darren!");
-			validUsers.put("beth", "304Beth!");
-			validUsers.put("anilov","304Anilov!");
-			validUsers.put("putri","304Putri!");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM customer WHERE userid = ? AND password = ?");
+        	stmt.setString(1, username);
+        	stmt.setString(2, password);
+        	ResultSet rs = stmt.executeQuery();
 
-			// Checks if the user inputted a valid username
-			if(validUsers.containsKey(username)){
-				String validPassword = validUsers.get(username);
-				if(validPassword.equals(password)){
-					retStr = username;
-				}
-				
-			}
+        	if (rs.next()) {
+            	retStr = username;
+        	}
+
 						
 		} 
 		catch (SQLException ex) {

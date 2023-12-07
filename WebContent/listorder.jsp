@@ -5,7 +5,42 @@
 <html>
 <head>
 <title>A&Q Grocery Order List</title>
-<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- Add the same style section as in the shop.html page -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style>
+	/* Style the table */
+		table {
+			width: 80%;
+			margin: 0 auto;
+			border-collapse: collapse;
+		}
+
+		/* Style the table header */
+		th {
+			height: 50px;
+			background-color: #0077B6;
+			color: white;
+			text-align: center;
+			font-weight: bold;
+		}
+
+		/* Style the table cells */
+		td {
+			height: 100px;
+			padding: 10px;
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		/* Alternate the background color of the table rows */
+		tr:nth-child(even) {
+			background-color: #F0F2F5;
+		}
+
+		tr:nth-child(odd) {
+			background-color: #E0E0E0;
+		}
+	</style>
 </head>
 <body>
 

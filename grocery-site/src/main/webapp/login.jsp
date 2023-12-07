@@ -3,10 +3,16 @@
 <head>
 <title>Login Screen</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+<style>
+	table{
+		border: none
+	}
+</style>
 </head>
 <body>
 
-<div style="margin:0 auto;text-align:center;display:inline">
+<div style="margin:0 auto; text-align:center;">
+
 
 <h3>Please Login to System</h3>
 
@@ -29,6 +35,7 @@ if (session.getAttribute("loginMessage") != null)
 </tr>
 </table>
 <br/>
+<br></br>
 <input class="submit" type="submit" name="Submit2" value="Log In">
 </form>
 

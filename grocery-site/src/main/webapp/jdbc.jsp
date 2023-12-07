@@ -10,9 +10,9 @@ Public methods:
 
 <%!
 	// User id, password, and server information
-	private String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
-	private String uid = "sa";
-	private String pw = "304#sa#pw";
+	private String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+	// private String uid = "sa";
+	// private String pw = "304#sa#pw";
 	
 	// Do not modify this url
 	private String urlForLoadData = "jdbc:sqlserver://cosc304_sqlserver:1433;TrustServerCertificate=True";
@@ -33,7 +33,7 @@ Public methods:
 			throw new SQLException("ClassNotFoundException: " +e);
 		}
 	
-		con = DriverManager.getConnection(url, uid, pw);
+		con = DriverManager.getConnection(url);
 		Statement stmt = con.createStatement();
 	}
    
