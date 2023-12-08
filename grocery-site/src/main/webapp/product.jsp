@@ -7,11 +7,20 @@
 <html>
 <head>
 <title>A&P's Grocery - Product Information</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css">
+<style>
+	*{
+		margin: 0 auto;
+		text-align:center;
+	}
+	
+</style>
 </head>
 <body>
 
-<%@ include file="header.jsp" %>
+<div class="container">
+        <img src="logo.png" alt="A&P Pharmacy Logo" class="logo">
+</div>
 
 <%
 // Get product name to search for
@@ -28,16 +37,16 @@ catch (java.lang.ClassNotFoundException e)
 }
 
 // Make the connection
-"jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";		
-//String uid = "sa";
-//String pw = "304#sa#pw";
+String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";		
+// String uid = "sa";
+// String pw = "304#sa#pw";
 
 NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 			
-try ( Connection con = DriverManager.getConnection(url, uid, pw);
+try ( Connection con = DriverManager.getConnection(url);
 	    Statement stmt = con.createStatement();) 
 {			
-	String query = "SELECT productName, productId, productPrice FROM product WHERE productId = ?";
+	String query = "SELECT productName, productId, productPrice, productDesc FROM product WHERE productId = ?";
 	PreparedStatement pstmt = con.prepareStatement(query);
 	if (productId != null && !productId.isEmpty()) {
         pstmt.setString(1, productId);
@@ -48,6 +57,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	while (rs.next()) {
     	String productName = rs.getString("productName");
     	String productPrice = rs.getString("productPrice");
+		String productDesc = rs.getString("productDesc");
 
 		// For each product create a link of the form
 		// addcart.jsp?id=productId&name=productName&price=productPrice
@@ -57,6 +67,9 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		// out.println("<img src=\"displayImage.jsp?id=" + URLEncoder.encode(productId, "UTF-8") + "\">");
 		out.println("<img src=img/" + productId + ".jpg>");
 
+		out.println("<br>");
+		out.println("<strong>Product Description: </strong>");
+		out.print(productDesc);
 		out.println("<br>");
 		out.println("<b>Product Id: </b>");
 		out.println(productId+ "<br>");
@@ -79,7 +92,14 @@ catch (SQLException ex)
 	out.println("SQLException: " + ex);
 }		
 
-String sql = "";
+
+
+// TODO: If there is a productImageURL, display using IMG tag
+
+		
+// TODO: Retrieve any image stored directly in database. Note: Call displayImage.jsp with product id as parameter.
+		
+// TODO: Add links to Add to Cart and Continue Shopping
 %>
 
 </body>
