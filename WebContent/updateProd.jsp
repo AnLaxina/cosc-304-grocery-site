@@ -1,8 +1,39 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
+<%@ include file="jdbc.jsp" %>
+
+<%
+// Get the product name from the request parameters
+String productName = request.getParameter("productName");
+
+// Get the current values of the product attributes from the database
+String currentProductName = null;
+String currentCategoryId = null;
+String currentProductDesc = null;
+String currentProductPrice = null;
+try {
+    getConnection();
+    PreparedStatement pstmt = con.prepareStatement("SELECT * FROM product WHERE productName = ?");
+    pstmt.setString(1, productName);
+    ResultSet rs = pstmt.executeQuery();
+    if (rs.next()) {
+        currentProductName = rs.getString("productName");
+        currentCategoryId = rs.getString("categoryId");
+        currentProductDesc = rs.getString("productDesc");
+        currentProductPrice = rs.getString("productPrice");
+    }
+    rs.close();
+    pstmt.close();
+} catch (SQLException ex) {
+    out.println("SQLException: " + ex);
+} finally {
+    closeConnection();
+}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Update/Delete Product</title>
+<title>Update Product</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
     h2, form {
@@ -13,46 +44,19 @@
 </head>
 <body>
 
-<h2>Update/Delete a Product</h2>
+<h2>Update Product</h2>
 
-<%@
- include file = "auth.jsp"
-%>
-<%@
- include file = "jdbc.jsp"
-%>
-
-<%
-// Get the list of product names from the database
-List<String> productNames = new ArrayList<>();
-try {
-    getConnection();
-    Statement stmt = con.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT productName FROM product");
-    while (rs.next()) {
-        productNames.add(rs.getString("productName"));
-    }
-    rs.close();
-    stmt.close();
-} catch (SQLException ex) {
-    out.println("SQLException: " + ex);
-} finally {
-    closeConnection();
-}
-%>
-
-<form action="updateDeleteProduct.jsp" method="post">
-    <label for="productName">Select a Product:</label><br>
-    <select id="productName" name="productName">
-        <% for (String productName : productNames) { %>
-            <option value="<%= productName %>"><%= productName %></option>
-        <% } %>
-    </select><br>
-    <label for="newProductName">New Product Name:</label><br>
-    <input type="text" id="newProductName" name="newProductName"><br>
-    <!-- Add more fields as needed for other product attributes -->
-    <input type="submit" name="action" value="Update">
-    <input type="submit" name="action" value="Delete">
+<form action="performUpdate.jsp" method="post">
+    <input type="hidden" name="productName" value="<%= productName %>">
+    <label for="newProductName">Product Name:</label><br>
+    <input type="text" id="newProductName" name="newProductName" value="<%= currentProductName %>"><br>
+    <label for="categoryId">Category ID:</label><br>
+    <input type="text" id="categoryId" name="categoryId" value="<%= currentCategoryId %>"><br>
+    <label for="productDesc">Product Description:</label><br>
+    <input type="text" id="productDesc" name="productDesc" value="<%= currentProductDesc %>"><br>
+    <label for="productPrice">Product Price:</label><br>
+    <input type="text" id="productPrice" name="productPrice" value="<%= currentProductPrice %>"><br>
+    <input type="submit" value="Update">
 </form>
 
 <!--Returns the user to the admin page-->
