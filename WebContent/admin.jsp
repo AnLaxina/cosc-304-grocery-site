@@ -4,20 +4,6 @@
 <title>Administrator Page</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
-    .button {
-            display: block;
-            width: 200px; 
-            margin: 10px auto; 
-            padding: 10px 20px;
-            font-size: 20px;
-            cursor: pointer;
-            text-decoration: none;
-            color: whitesmoke;
-            background-color: #0077B6;
-            border: none;
-            border-radius: 15px;
-            transition: 0.3s;
-    }
     .container {
             text-align: center; 
     }
@@ -41,8 +27,8 @@ if (session.getAttribute("authenticatedUser") == null) {
     <!-- Add a button to view total sales -->
     <a href="salesReport.jsp" class="button">View Total Sales</a>
 
-    <!-- Add more buttons as needed for other admin functions -->
-
+    <!-- View the 'Add Product' page -->
+    <a href="addProd.jsp" class="button">Add Product</a>
     <!--Returns the user to the main admin page-->
     <br>
     <a href="index.jsp" class="button">Return to Main Page</a>

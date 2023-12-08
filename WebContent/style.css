@@ -71,6 +71,22 @@
           transition: 0.3s;
   }
 
+  /* Style regular buttons as the same lol */
+  .button{
+        display: block;
+            width: 200px; 
+            margin: 10px auto; 
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: whitesmoke;
+            background-color: #0077B6;
+            border: none;
+            border-radius: 15px;
+            transition: 0.3s;
+  }
+
   /* Change the background color of the buttons on hover */
   .main button:hover {
           background-color: #0096C7;
