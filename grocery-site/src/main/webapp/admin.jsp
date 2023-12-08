@@ -29,6 +29,10 @@ if (session.getAttribute("authenticatedUser") == null) {
 
     <!-- View the 'Add Product' page -->
     <a href="addProd.jsp" class="button">Add Product</a>
+
+    <!-- Update/delete a product -->
+    <a href="updateProd.jsp" class="button">Update/Delete a Product</a>
+
     <!--Returns the user to the main admin page-->
     <br>
     <a href="index.jsp" class="button">Return to Main Page</a>
