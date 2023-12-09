@@ -111,15 +111,6 @@ catch (SQLException ex)
 }		
 
 
-// For each order in the ResultSet
-
-	// Print out the order summary information
-	// Write a query to retrieve the products in the order
-	//   - Use a PreparedStatement as will repeat this query many times
-	// For each product in the order
-		// Write out product information 
-
-
 %>
 <button onclick="window.location.href='shop.html'" class="main">Return to Main Page</button>
 </body>

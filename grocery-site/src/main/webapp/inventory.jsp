@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>A&Q Grocery Order List</title>
+<title>A&P Pharmacy Inventory</title>
 	<!-- Add the same style section as in the shop.html page -->
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<style>
@@ -44,7 +44,7 @@
 </head>
 <body>
 
-<h1>Order List</h1>
+<h1>Warehouse Inventory</h1>
 
 <%
 //Note: Forces loading of SQL Server driver
@@ -56,14 +56,6 @@ catch (java.lang.ClassNotFoundException e)
 {
 	out.println("ClassNotFoundException: " +e);
 }
-
-// Useful code for formatting currency values:
-// NumberFormat currFormat = NumberFormat.getCurrencyInstance();
-// out.println(currFormat.format(5.0));  // Prints $5.00
-
-// Make connection
-
-// Write query to retrieve all order summary records
 
 String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";		
 // String uid = "sa";
@@ -78,7 +70,7 @@ try ( Connection con = DriverManager.getConnection(url);
 				 "FROM warehouse";
 
 	String sql2 = "SELECT productId, quantity, price " + 
-				  "FROM productinventory pi " + 
+				  "FROM productinventory " + 
 				  "WHERE warehouseId = ?";
 	PreparedStatement pstmt = con.prepareStatement(sql2);
 	
@@ -86,9 +78,23 @@ try ( Connection con = DriverManager.getConnection(url);
 	ResultSet rst = stmt.executeQuery(sql);
 	out.println("<table border='1'><tr><th>Warehouse Id</th><th>Warehouse Name</th></tr>");
 	while (rst.next())
-	{	int orderId = rst.getInt(1);
-		out.println("<tr><td>"+rst.getInt("warehouseId")+"</td>"+
-						"<td>"+rst.getString("warehouseName")+"</td></tr>");
+	{	int warehouseId = rst.getInt(1);
+		out.println("<tr><td>"+rst.getInt(1)+"</td>"+
+						"<td>"+rst.getString(2)+"</td></tr>");
+
+		// Retrieve quantity
+		pstmt.setInt(1, warehouseId);
+		ResultSet rst2 = pstmt.executeQuery();
+		out.println("<td>");
+		out.println("<table border='1'><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
+		while (rst2.next()) {
+			out.println("<tr><td>"+rst2.getInt("productId")+"</td>"+
+						"<td>"+rst2.getInt("quantity")+"</td>"
+						+"<td>"+currFormat.format(rst2.getDouble(3))+"</td></tr>");
+			}
+		out.println("</table>");
+		out.println("</td>");
+		rst2.close(); 
 	}
 	out.println("</table>");
 	// Close connection
@@ -98,16 +104,6 @@ catch (SQLException ex)
 {
 	out.println("SQLException: " + ex);
 }		
-
-
-// For each order in the ResultSet
-
-	// Print out the order summary information
-	// Write a query to retrieve the products in the order
-	//   - Use a PreparedStatement as will repeat this query many times
-	// For each product in the order
-		// Write out product information 
-
 
 %>
 <button onclick="window.location.href='shop.html'" class="main">Return to Main Page</button>

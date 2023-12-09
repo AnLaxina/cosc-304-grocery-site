@@ -57,14 +57,6 @@ catch (java.lang.ClassNotFoundException e)
 	out.println("ClassNotFoundException: " +e);
 }
 
-// Useful code for formatting currency values:
-// NumberFormat currFormat = NumberFormat.getCurrencyInstance();
-// out.println(currFormat.format(5.0));  // Prints $5.00
-
-// Make connection
-
-// Write query to retrieve all order summary records
-
 String url = "jdbc:sqlserver://cosc304db.database.windows.net:1433;database=304-grocery-site-db;user=cosc304-admin@cosc304db;password=UBC304PW$;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";		
 // String uid = "sa";
 // String pw = "304#sa#pw";
@@ -90,10 +82,10 @@ try ( Connection con = DriverManager.getConnection(url);
 		out.println("<tr><td>"+rst.getInt(1)+"</td>"+
 						"<td>"+rst.getString(2)+"</td></tr>");
 
-		/*// Retrieve product
+		// Retrieve quantity
 		pstmt.setInt(1, warehouseId);
 		ResultSet rst2 = pstmt.executeQuery();
-		//out.println("<td></td><td></td><td>");
+		out.println("<td>");
 		out.println("<table border='1'><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
 		while (rst2.next()) {
 			out.println("<tr><td>"+rst2.getInt("productId")+"</td>"+
@@ -102,7 +94,7 @@ try ( Connection con = DriverManager.getConnection(url);
 			}
 		out.println("</table>");
 		out.println("</td>");
-		rst2.close(); */
+		rst2.close(); 
 	}
 	out.println("</table>");
 	// Close connection
