@@ -29,8 +29,6 @@
 
         <!-- Create a footer section with links -->
         <div class="footer">
-                <a href="ship.jsp?orderId=1">Test Ship orderId=1</a>
-                <a href="ship.jsp?orderId=3">Test Ship orderId=3</a>
         </div>
 </body>
 </html>

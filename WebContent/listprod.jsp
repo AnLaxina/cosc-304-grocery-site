@@ -78,13 +78,6 @@
 <!-- Add the same logo and navbar as in the shop.html page -->
 <img src="logo.png" alt="A&P Grocery Logo" class="logo">
 
-<div class="navbar">
-        <a href="login.jsp">Login</a>
-        <a href="customer.jsp">Customer Info</a>
-        <a href="admin.jsp">Administrators</a>
-        <a href="logout.jsp">Log out</a>
-</div>
-
 <!-- Style the search form and the table -->
 <div class="search-form">
 	<form method="get" action="listprod.jsp">
@@ -181,6 +174,10 @@ catch (SQLException ex)
 // out.println(currFormat.format(5.0);	// Prints $5.00
 %>
 </table>
+
+<div class="footer">
+        <a href="index.jsp">Return to main page</a>
+</div>
 
 </body>
 </html>
