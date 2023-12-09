@@ -10,6 +10,14 @@
 		text-align:center;
     }
 </style>
+<!-- Adding a bit of Javascript to handle different actions !-->
+<script>
+    function submitForm(action) {
+        var form = document.getElementById('productForm');
+        form.action = action;
+        form.submit();
+    }
+</script>
 </head>
 <body>
 
@@ -41,19 +49,15 @@ try {
 }
 %>
 
-<form action="updateProd.jsp" method="post">
+<form id="productForm" method="post">
     <label for="productName">Select a Product:</label><br>
     <select id="productName" name="productName">
         <% for (String productName : productNames) { %>
             <option value="<%= productName %>"><%= productName %></option>
         <% } %>
     </select><br>
-    <input type="submit" value="Update Product">
-</form>
-
-<form action="deleteProduct.jsp" method="post">
-    <input type="hidden" id="productName" name="productName" value="<%= productNames.get(0) %>">
-    <input type="submit" value="Delete Product">
+    <input class = "button" type="button" onclick="submitForm('updateProd.jsp')" value="Update Product">
+    <input class = "button" type="button" onclick="submitForm('deleteProd.jsp')" value="Delete Product">
 </form>
 
 <!--Returns the user to the admin page-->
