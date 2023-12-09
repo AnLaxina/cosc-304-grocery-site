@@ -33,6 +33,9 @@ if (session.getAttribute("authenticatedUser") == null) {
     <!-- Update/delete a product -->
     <a href="updateDeleteProd.jsp" class="button">Update/Delete a Product</a>
 
+    <!--Restore the Database -->
+    <a href="restoreDb.jsp" class="button">Restore the Database</a>
+
     <!--Returns the user to the main admin page-->
     <br>
     <a href="index.jsp" class="button">Return to Main Page</a>
