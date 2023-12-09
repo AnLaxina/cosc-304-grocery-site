@@ -25,6 +25,7 @@
                 <h1>Welcome to A&P Pharmacy</h1>
                 <button onclick="window.location.href='listprod.jsp'">Begin Shopping</button>
                 <button onclick="window.location.href='listorder.jsp'">List All Orders</button>
+                <button onclick="window.location.href='Inventory.jsp'">Warehouse Inventory</button>
         </div>
 
         <!-- Create a footer section with links -->
