@@ -89,20 +89,6 @@ try ( Connection con = DriverManager.getConnection(url);
 	{	int orderId = rst.getInt(1);
 		out.println("<tr><td>"+rst.getInt("warehouseId")+"</td>"+
 						"<td>"+rst.getString("warehouseName")+"</td></tr>");
-
-		// Retrieve product
-		pstmt.setInt(1, warehouseId);
-		ResultSet rst2 = pstmt.executeQuery();
-		out.println("<td></td><td></td><td colspan='5'>");
-		out.println("<table border='1'><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
-		while (rst2.next()) {
-			out.println("<tr><td>"+rst2.getInt(1)+"</td>"+
-						"<td>"+rst2.getInt(2)+"</td>"
-						+"<td>"+currFormat.format(rst2.getDouble(3))+"</td></tr>");
-			}
-		out.println("</table>");
-		out.println("</td>");
-		rst2.close();
 	}
 	out.println("</table>");
 	// Close connection

@@ -78,7 +78,7 @@ try ( Connection con = DriverManager.getConnection(url);
 				 "FROM warehouse";
 
 	String sql2 = "SELECT productId, quantity, price " + 
-				  "FROM productinventory pi " + 
+				  "FROM productinventory " + 
 				  "WHERE warehouseId = ?";
 	PreparedStatement pstmt = con.prepareStatement(sql2);
 	
@@ -86,23 +86,23 @@ try ( Connection con = DriverManager.getConnection(url);
 	ResultSet rst = stmt.executeQuery(sql);
 	out.println("<table border='1'><tr><th>Warehouse Id</th><th>Warehouse Name</th></tr>");
 	while (rst.next())
-	{	int warehouseId= rst.getInt(1);
-		out.println("<tr><td>"+rst.getInt("warehouseId")+"</td>"+
-						"<td>"+rst.getString("warehouseName")+"</td></tr>");
+	{	int warehouseId = rst.getInt(1);
+		out.println("<tr><td>"+rst.getInt(1)+"</td>"+
+						"<td>"+rst.getString(2)+"</td></tr>");
 
-		// Retrieve product
+		/*// Retrieve product
 		pstmt.setInt(1, warehouseId);
 		ResultSet rst2 = pstmt.executeQuery();
-		out.println("<td></td><td></td><td colspan='5'>");
+		//out.println("<td></td><td></td><td>");
 		out.println("<table border='1'><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
 		while (rst2.next()) {
-			out.println("<tr><td>"+rst2.getInt(1)+"</td>"+
-						"<td>"+rst2.getInt(2)+"</td>"
+			out.println("<tr><td>"+rst2.getInt("productId")+"</td>"+
+						"<td>"+rst2.getInt("quantity")+"</td>"
 						+"<td>"+currFormat.format(rst2.getDouble(3))+"</td></tr>");
 			}
 		out.println("</table>");
 		out.println("</td>");
-		rst2.close();
+		rst2.close(); */
 	}
 	out.println("</table>");
 	// Close connection
@@ -112,16 +112,6 @@ catch (SQLException ex)
 {
 	out.println("SQLException: " + ex);
 }		
-
-
-// For each order in the ResultSet
-
-	// Print out the order summary information
-	// Write a query to retrieve the products in the order
-	//   - Use a PreparedStatement as will repeat this query many times
-	// For each product in the order
-		// Write out product information 
-
 
 %>
 <button onclick="window.location.href='shop.html'" class="main">Return to Main Page</button>
